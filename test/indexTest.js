@@ -9,7 +9,6 @@ const {
   createDirectory,
   downloadFile,
   encryptFile,
-  downloadConcurrentFiles,
 } = require('../index');
 
 describe('Strings', () => {
@@ -44,17 +43,11 @@ describe('Directory manipulation', () => {
 describe('Promise rejection', () => {
   it('download file promise rejected/No file in parameters', async () => {
     await downloadFile().catch((error) => {
-      assert.equal(error, "TypeError: Cannot read property 'Key' of undefined");
+      assert.equal(error instanceof Error, true);
     });
   });
 
   it('encrypt file promise rejected', async () => {
     assert.throws(() => encryptFile(), TypeError);
-  });
-
-  it('download concurrent file promise rejected/No files in parameters', async () => {
-    await downloadConcurrentFiles().catch((error) => {
-      assert.equal(typeof (error), 'error');
-    });
   });
 });

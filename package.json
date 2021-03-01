@@ -4,24 +4,23 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha test/s3Test.js test/kmsTest.js test/indexTest.js",
-    "coverage": "npx nyc@latest mocha",
+    "test": "nyc mocha test/s3Test.js test/kmsTest.js test/indexTest.js",
     "start": "node index"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "aws-sdk": "^2.853.0",
-    "aws-sdk-mock": "^5.1.0",
-    "bluebird": "^3.7.2",
-    "chai": "^4.3.0",
-    "mocha": "^8.3.0",
-    "mock-aws-s3": "^4.0.1"
+    "bluebird": "^3.7.2"
   },
   "devDependencies": {
     "eslint": "^7.20.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.22.1",
-    "nyc": "^15.1.0"
+    "nyc": "^15.1.0",
+    "chai": "^4.3.0",
+    "mocha": "^8.3.0",
+    "mock-aws-s3": "^4.0.1",
+    "aws-sdk-mock": "^5.1.0"
   }
 }

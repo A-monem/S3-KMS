@@ -65,8 +65,7 @@ const downloadConcurrentFiles = (files) => {
       console.log('*************************************************');
       console.log('downloadedFiles.txt has been successfully created');
       encryptFile(downloadedFileName);
-    })
-    .catch((error) => console.error(new Error(error)));
+    });
 };
 
 // list objects in s3 bucket and start downloading
@@ -91,5 +90,4 @@ module.exports = {
   createDirectory,
   downloadFile,
   encryptFile,
-  downloadConcurrentFiles,
 };
