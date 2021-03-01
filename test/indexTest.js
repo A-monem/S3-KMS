@@ -2,12 +2,14 @@
 const fs = require('fs');
 const { assert } = require('chai');
 const { it } = require('mocha');
-
 const {
   localDirectory,
   downloadedFileName,
   clearDataDirectory,
   createDirectory,
+  downloadFile,
+  encryptFile,
+  downloadConcurrentFiles,
 } = require('../index');
 
 describe('Strings', () => {
@@ -35,6 +37,24 @@ describe('Directory manipulation', () => {
     clearDataDirectory();
     fs.readdir('data', (err, files) => {
       assert.isEmpty(files);
+    });
+  });
+});
+
+describe('Promise rejection', () => {
+  it('download file promise rejected/No file in parameters', async () => {
+    await downloadFile().catch((error) => {
+      assert.equal(error, "TypeError: Cannot read property 'Key' of undefined");
+    });
+  });
+
+  it('encrypt file promise rejected', async () => {
+    assert.throws(() => encryptFile(), TypeError);
+  });
+
+  it('download concurrent file promise rejected/No files in parameters', async () => {
+    await downloadConcurrentFiles().catch((error) => {
+      assert.equal(typeof (error), 'error');
     });
   });
 });

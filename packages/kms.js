@@ -12,6 +12,8 @@ const encryptData = (file) => {
     kms.encrypt(params, (err, data) => {
       if (err) {
         reject(err);
+      } else if (!data.CiphertextBlob) {
+        reject(new Error('No data received'));
       } else {
         const { CiphertextBlob } = data;
 

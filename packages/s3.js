@@ -19,7 +19,7 @@ const getStructure = () => {
       if (err) {
         reject(err);
       } else if (!data.Contents) {
-        reject(err);
+        reject(new Error('No data received'));
       } else {
         resolve(sortBucketObjects(data.Contents));
       }
@@ -37,7 +37,7 @@ const getFile = (file) => {
   const fileData = new Promise((resolve, reject) => {
     s3.getObject(params, (err, data) => {
       if (err) {
-        reject(err);
+        reject(new Error('No data received'));
       } else {
         resolve(data.Body);
       }

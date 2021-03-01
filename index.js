@@ -10,7 +10,6 @@ Promise.promisifyAll(fs);
 // constants
 const localDirectory = 'data';
 const downloadedFileName = 'data/downloadedFiles.txt';
-// AWS options
 
 // clear data directory
 const clearDataDirectory = () => {
@@ -34,7 +33,7 @@ const encryptFile = (file) => {
         console.log('downloadedFiles.txt has been successfully encrypted');
       });
     })
-    .catch((error) => console.log(new Error(error)));
+    .catch((error) => console.error(error));
 };
 
 // download single file from s3 bucket
@@ -53,9 +52,10 @@ const downloadFile = (file, i) => new Promise((resolve) => {
 
       resolve(appendFileNamePromise);
     })
-    .catch((error) => console.log(new Error(error)));
+    .catch((error) => console.error(error));
 });
 
+// initiate downloads
 const downloadConcurrentFiles = (files) => {
   Promise.map(files, (file, i) => downloadFile(file, i), { concurrency: 4 })
     .then((fileNames) => {
@@ -66,7 +66,7 @@ const downloadConcurrentFiles = (files) => {
       console.log('downloadedFiles.txt has been successfully created');
       encryptFile(downloadedFileName);
     })
-    .catch((error) => console.log(new Error(error)));
+    .catch((error) => console.error(new Error(error)));
 };
 
 // list objects in s3 bucket and start downloading
@@ -79,7 +79,7 @@ const downloadS3Bucket = () => {
       createDirectory(directories);
       downloadConcurrentFiles(files);
     })
-    .catch((error) => console.log(new Error(error)));
+    .catch((error) => console.error(error));
 };
 
 downloadS3Bucket();
@@ -89,4 +89,7 @@ module.exports = {
   downloadedFileName,
   clearDataDirectory,
   createDirectory,
+  downloadFile,
+  encryptFile,
+  downloadConcurrentFiles,
 };
